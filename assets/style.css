@@ -3,6 +3,8 @@
 }
 body {
     background-color: lightgray;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
@@ -17,7 +19,10 @@ header h1{
     color:white;
 }
 main{
+    height:100%;
     display: flex;
+    justify-content: stretch;
+    flex:1 1 ;
 }
 
 input {
@@ -38,7 +43,7 @@ button {
     display:flex;
     flex-direction: column;
     padding: 5px;
-    width: 200px;
+    width: 180px;
 }
 
 #popularList{
@@ -46,12 +51,28 @@ button {
     flex-direction: column;
 }
 
+#currentSection{
+    border: 1px dashed gray;
+    height: 45%;
+    display: flex;
+    justify-content: stretch;
+    flex: 1 1 3; 
+}
+
 #futureSection{
-    margin-top: 10px;
+    height:45%;
+    text-align: center;
+    border: 1px dashed gray;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 1;
 }
 
 #futureSection h3{
     margin:5px;
+    display: inline;
+    margin-top: 20px;
+    
 }
 
 #contentSection {
@@ -65,21 +86,31 @@ button {
 
 #futureList{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    border: 1px dashed gray;
+    flex: 1 1;
 }
 
 .card{
+    flex: 1 1;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    align-items: center;
     border: 1px solid black;
+    border-radius: 10px;
     flex-wrap: nowrap;
-    margin: 10px;
+    margin: 5px;
+    padding: 10px;
 }
 
 .card h3, .card h4{
     padding:5px;
     white-space: nowrap;
+}
+.card img{
+    width: 50px;
+    height: 50px;
 }
 
 .currentCard{
@@ -105,16 +136,30 @@ button {
     #menuSection hr{
         display: none;
     }
+    #contentSection{
+        flex: 1 1
+    }
+    #currentSection{
+        flex: 1 1;
+    }
+    #futureSection{
+        flex: 1 1;
+    }
+    
 }
 
 @media screen and (max-width: 768px){
-    main{
-        flex-direction: column;
-    }
     #popularList{
         display:none;
     }
     #futureList{
         flex-direction: column;
+    }
+    
+    .currentCard{
+        height: 50vh;
+    }
+    #futureSection{
+        margin-top: 20px;
     }
 }
