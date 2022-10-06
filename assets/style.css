@@ -1,0 +1,67 @@
+:root{
+    --headerGradient: linear-gradient(90deg,blue, purple);
+}
+body {
+    background-color: lightgray;
+}
+
+header {
+    height: 5vh;
+    background: var(--headerGradient);
+    display: flex;
+    align-items: center;
+}
+
+header h1{
+    font-size: 24px;
+    color:white;
+}
+main{
+    display: flex;
+}
+
+input {
+    border-radius: 3px;
+}
+
+#menuSection {
+    background-color: gray;
+    display:flex;
+    flex-direction: column;
+    padding: 5px;
+    width:200px;
+}
+
+#futureSection{
+    margin-top: 10px;
+}
+
+#contentSection {
+    width:100%;
+    background-color: darkgray;
+    padding:5px;
+}
+
+#futureList{
+    display: flex;
+    justify-content: space-around;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border: 1px solid black;
+}
+
+.card h3, .card h4{
+    padding:5px;
+}
+
+.currentCard{
+    text-align: center;
+}
+
+.futureCard{
+
+}
