@@ -22,6 +22,14 @@ main{
 
 input {
     border-radius: 3px;
+    margin: 5px 0px;
+    padding: 5px;
+}
+
+button {
+    border: 1px solid black;
+    border-radius: 4px;
+    padding:5px;
 }
 
 #menuSection {
@@ -32,14 +40,30 @@ input {
     width:200px;
 }
 
+#popularList{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#popularList button{
+    margin: 5px 0px;
+}
+
 #futureSection{
     margin-top: 10px;
+}
+
+#futureSection h3{
+    margin:5px;
 }
 
 #contentSection {
     width:100%;
     background-color: darkgray;
     padding:5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 #futureList{
@@ -52,10 +76,12 @@ input {
     flex-direction: column;
     justify-content: space-around;
     border: 1px solid black;
+    flex-wrap: nowrap;
 }
 
 .card h3, .card h4{
     padding:5px;
+    white-space: nowrap;
 }
 
 .currentCard{
