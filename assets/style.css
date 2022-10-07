@@ -1,5 +1,5 @@
 :root{
-    --headerGradient: linear-gradient(90deg,blue, purple);
+    --headerGradient: linear-gradient(blue, purple);
     --backgroundGradient: linear-gradient(10deg, rgb(87, 174, 202), rgb(87, 150, 202));
 
     --primaryBorder: 1px solid rgba(255, 255, 255, 0.452);

@@ -78,6 +78,7 @@ function addToHistory(name){
     var exists = false;
     var index = 0;
 
+    // check to see if it already exists
     for (let i = 0; i < history.length; i++){
         if (history[i].toLowerCase() == name.toLowerCase()){
             exists = true;
@@ -86,13 +87,14 @@ function addToHistory(name){
         }
     }
 
+    // if it doesn't, add it to the front of the list
     if (!exists){
         history.unshift(name);
-        if (history.length > 8){
+        if (history.length > 8){ // 8 seems like a good backlog, remove the last on the list
             history.splice(history.length-1, 1);
         }
         
-    } else{
+    } else{ // if it does, move it to the front of the list
         history.splice(index, 1);
         history.unshift(name);
     }
@@ -158,10 +160,12 @@ function setCity(city){
 
     // start the asynchronous fetch of the weather data by finding latitude/longitude positions
     fetch(fetchUrl).then((response)=>{
-        if (!response.ok){
+        if (response.ok){
+            return response.json();
+        }else{
             throw new Error("Not 2xx response", {cause: response});
         }
-        return response.json();
+        
     }).then((data)=>{
 
         // return data is an object if using a zipcode, or an array if using a name
@@ -180,7 +184,6 @@ function setCity(city){
         
     }).catch((error)=>{ // show the user an error if there was a problem in fetching the data
         showError(`Location '${city}' was not found.`);
-        console.log(error);
     }
     )
     elements.searchInput.val("") // reset the search input to keep things clean
@@ -188,7 +191,6 @@ function setCity(city){
 
 /** fetches weather data based on latiude/longitude positions and renders it to the screen*/ 
 function fetchWeather(lat,lon){
-    console.log(lat + " " + lon);
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=imperial`).then((currentResponse)=>{
         
         return currentResponse.json();
@@ -220,19 +222,19 @@ function buildAndRenderData(current, forecast){
     forecast.list.forEach((weather) => {
         var now = moment();
         var timeStamp = moment(weather.dt_txt, "YYYY-MM-DD hh:mm:ss");
-        var future = timeStamp.local().isAfter(now, "day");
-        console.log(future);
-        if (!future){
-            //return;
-        }
-
-        if (timeStamp.format("H") == 12){
+        // var future = timeStamp.local().isAfter(now, "day");
+        // if (!future){
+        //     //return;
+        // }
+        
+        if (timeStamp.format("H") == 0){
             var card = createWeatherCard(weather);
             elements.futureList.append(card);
         }
     });
 }
 
+/* ------------------------------------------------------------------------------*/
 
 // load the history from local storage into buttons
 loadPopular();
@@ -240,7 +242,6 @@ loadPopular();
 // imediately fetch and display the weather data for the most recent
 // city in the history (or Seattle as a default)
 var hist = JSON.parse(localStorage.getItem("whistory"));
-console.log(hist);
 setCity(hist ? hist[0] : "Seattle");
 
 // add a click handler for the search button
@@ -249,7 +250,6 @@ elements.searchButton.on("click", function(event){
     if (!elements.searchInput.val()){
         return;
     }
-    
     setCity(elements.searchInput.val());
 })
 
@@ -268,7 +268,5 @@ elements.historyButton.on("click", function(event){
 
 // add a click handler for closing the history bubble on smaller devices
 document.addEventListener("click", function(){
-
     elements.popularList.removeClass("show");
-
 })
