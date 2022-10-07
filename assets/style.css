@@ -1,15 +1,18 @@
 :root{
     --headerGradient: linear-gradient(90deg,blue, purple);
+    --backgroundGradient: linear-gradient(10deg, rgb(87, 174, 202), rgb(87, 150, 202));
+
+    --primaryBorder: 1px solid rgba(255, 255, 255, 0.452);
 }
 body {
-    background-color: lightgray;
+    background: var(--backgroundGradient);
     display: flex;
     flex-direction: column;
 }
 
 header {
     height: 5vh;
-    background: var(--headerGradient);
+    border-bottom: var(--primaryBorder);
     display: flex;
     align-items: center;
 }
@@ -26,24 +29,44 @@ main{
 }
 
 input {
-    border-radius: 3px;
+    border-radius: 5px;
+    border: 1px dashed white;
     margin: 5px 0px;
     padding: 5px;
+    background-color: rgba(255, 255, 255, 0.308);
+    color: white;
+}
+input:focus{
+    border: 1px solid white;
+    outline:none;
 }
 
 button {
-    border: 1px solid black;
     border-radius: 4px;
     padding:5px;
-    margin:5px;
+    margin:5px 0;
+    background: none;
+    border: var(--primaryBorder);
+    color: white;
+}
+
+#searchButton{
+    background-color: rgba(0, 110, 255, 0.466);
 }
 
 #menuSection {
-    background-color: gray;
+    background-color: rgba(255, 255, 255, 0.192);
     display:flex;
     flex-direction: column;
     padding: 5px;
     width: 180px;
+    border-right: 1px solid rgba(255, 255, 255, 0.452);
+}
+
+#menuSection hr{
+    border: none;
+    margin: 10px 0;
+    border-bottom: var(--primaryBorder);
 }
 
 #popularList{
@@ -71,13 +94,11 @@ button {
 #futureSection h3{
     margin:5px;
     display: inline;
-    margin-top: 20px;
-    
+    color: white;
 }
 
 #contentSection {
     width:100%;
-    background-color: darkgray;
     padding:5px;
     display: flex;
     flex-direction: column;
@@ -96,25 +117,43 @@ button {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center;
-    border: 1px solid black;
-    border-radius: 10px;
+    align-items: start;
+    border: var(--primaryBorder);
+    border-radius: 30px;
+    padding: 10px;
     flex-wrap: nowrap;
     margin: 5px;
-    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.171);
+    color: white;
+    position:relative;
 }
 
 .card h3, .card h4{
-    padding:5px;
     white-space: nowrap;
+}
+.card h3 {
+    font-size: 24px;
+}
+.card h4{
+    font-size: 16px;
+    margin-top: 5px;
+}
+.card h5{
+    font-size: 12px;
 }
 .card img{
     width: 50px;
     height: 50px;
+    margin: -10px;
 }
 
+.temp{
+    position: absolute;
+    right: 10%;
+    top: 20%;
+    font-size: 36px;
+}
 .currentCard{
-    text-align: center;
 }
 
 .futureCard{
@@ -124,6 +163,7 @@ button {
 @media screen and (max-width: 998px){
     main{
         flex-direction: column;
+        background: var(--backgroundGradient);
     }
     #popularList{
         display:none;
@@ -132,6 +172,8 @@ button {
         width: 100%;
         flex-direction: row;
         justify-content: center;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.452);
     }
     #menuSection hr{
         display: none;

@@ -9,8 +9,8 @@ var key = "91334187c2181ae5f6e0ad1855dff301";
 
 function createWeatherCard(data){
 
-    var type = data.weather.main;
-    var description = data.weather.description;
+    var desc = data.weather[0].main;
+    var description = data.weather[0].description;
     var temp = data.main.temp;
     var wind = data.wind.speed;
     var hum = data.main.humidity;
@@ -28,6 +28,7 @@ function createWeatherCard(data){
 
     // var type = date.format //todo: calculate whether its future or current
     // div.addClass(type);
+    
 
     var dateh3 = $("<h3>");
     dateh3.text(date);
@@ -37,8 +38,18 @@ function createWeatherCard(data){
     img.attr("src", `https://openweathermap.org/img/wn/${icon}.png`)
     div.append(img);
 
-    var temph4 = $("<h4>");
-    temph4.text("Temp: " +temp);
+    
+    var desch4 = $("<h4>");
+    desch4.text(desc);
+    div.append(desch4);
+    
+    var desch3 = $("<h5>");
+    desch3.text(`(${description})`);
+    div.append(desch3);
+
+    var temph4 = $("<h1>");
+    temph4.addClass("temp");
+    temph4.text(Math.round(temp)+"°");
     div.append(temph4);
 
     var windh4 = $("<h4>");
