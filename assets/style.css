@@ -4,6 +4,9 @@
 
     --primaryBorder: 1px solid rgba(255, 255, 255, 0.452);
 }
+*{
+    font-family: "Baloo 2";
+}
 body {
     background: var(--backgroundGradient);
     display: flex;
@@ -58,12 +61,14 @@ button {
     color: white;
 }
 
-button:hover{
-    background:rgba(6, 143, 255, 0.363)
-}
+
 
 #searchButton{
     background-color: rgba(0, 110, 255, 0.466);
+}
+
+button:hover, #searchButton:hover{
+    background:rgb(6, 143, 255)
 }
 
 #menuSection {
@@ -108,10 +113,11 @@ button:hover{
     flex: 1 1 1;
 }
 
-#futureSection h3{
+#futureSection h3, #contentSection h3{
     margin:5px;
     display: inline;
     color: white;
+    text-align: center;
 }
 
 #contentSection {
@@ -155,12 +161,13 @@ button:hover{
     margin-top: 5px;
 }
 .card h5{
+    
     font-size: 12px;
+    text-align: end;
 }
 .card img{
     width: 50px;
     height: 50px;
-    margin: -10px;
 }
 
 .temp{
@@ -169,7 +176,8 @@ button:hover{
     top: 25%;
     font-size: 36px;
 }
-.currentCard{
+.currentCard .temp{
+    
 }
 
 .futureCard{
@@ -192,9 +200,10 @@ button:hover{
     #menuSection{
         width: 100%;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-between;
         border-right: none;
         border-bottom: 1px solid rgba(255, 255, 255, 0.452);
+        padding: 0px 15px;
     }
     #menuSection hr{
         display: none;
@@ -209,17 +218,21 @@ button:hover{
         flex: 1 1;
     }
     form{
-        width: 100%;
         flex-direction: row;
         justify-content: center;
+        flex: 0 1;
     }
     #searchButton{
         margin-left: 15px;
     }
     #historyButton{
         display: block;
-        margin-right: 10px;
+        margin-left: 25px;
     }
+    input{
+        width: 40vw;
+    }
+
 }
 
 @media screen and (max-width: 768px){
@@ -230,11 +243,13 @@ button:hover{
         flex-direction: column;
     }
     
-    .currentCard{
-        height: 50vh;
-    }
     #futureSection{
         margin-top: 20px;
+    }
+
+    #historyButton{
+        display: block;
+        margin-left: 25px;
     }
 }
 
@@ -250,8 +265,4 @@ button:hover{
     padding: 10px;
     z-index: 1;
     border-top-right-radius: 0px;
-}
-
-.show button{
-    /* background-color: rgb(51, 98, 184); */
 }

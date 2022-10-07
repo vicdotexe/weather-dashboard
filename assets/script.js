@@ -34,7 +34,7 @@ function createWeatherCard(data){
     div.append(dateh3);
 
     var dayh5 = $("<h5>");
-    dayh5.text(date.format("ddd"));
+    dayh5.text(date.format("dddd"));
     div.append(dayh5);
 
     var img = $("<img>");
@@ -115,7 +115,7 @@ function savedButtonClickHandler(event){
     var button = $(event.target);
     var name = button.attr("data-place");
     setCity(name);
-    elements.searchInput.val(name)
+    
 }
 
 function showError(message){
@@ -150,12 +150,12 @@ function setCity(city){
     }).then((data)=>{
         if (isZipCode){
             fetchWeather(data.lat, data.lon)
-            elements.location.text(data.name);
+            elements.location.text(" - " + data.name);
             addToHistory(data.name);
             loadPopular();
         }else{
             fetchWeather(data[0].lat, data[0].lon)
-            elements.location.text(data[0].name);
+            elements.location.text(" - " + data[0].name);
             addToHistory(data[0].name);
             loadPopular();
         }
@@ -165,6 +165,7 @@ function setCity(city){
         console.log(error);
     }
     )
+    elements.searchInput.val("")
 }
 
 function fetchWeather(lat,lon){
@@ -200,13 +201,13 @@ function buildAndRenderData(current, forecast){
     forecast.list.forEach((weather) => {
         var now = moment();
         var timeStamp = moment(weather.dt_txt, "YYYY-MM-DD hh:mm:ss");
-        var future = timeStamp.isAfter(now, "day");
+        var future = timeStamp.local().isAfter(now, "day");
         console.log(future);
         if (!future){
-            return;
+            //return;
         }
 
-        if (timeStamp.format("H") == 0){
+        if (timeStamp.format("H") == 12){
             var card = createWeatherCard(weather);
             elements.futureList.append(card);
         }
