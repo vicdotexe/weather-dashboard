@@ -1,3 +1,4 @@
+// static elements for easy access
 var elements = {
     currentSection: $("#currentSection"),
     futureList: $("#futureList"),
@@ -8,8 +9,10 @@ var elements = {
     historyButton: $("#historyButton")
 }
 
-var key = "91334187c2181ae5f6e0ad1855dff301";
+var key = "91334187c2181ae5f6e0ad1855dff301"; //my openweathermap api key
 
+/** This Generates and returns an html div element, appended with 
+ * elements containing data from a specific weather-data object */
 function createWeatherCard(data){
 
     var desc = data.weather[0].main;
@@ -66,6 +69,7 @@ function createWeatherCard(data){
     return div;
 }
 
+/** Persists a city name to local storage with a max-limit of 8 */
 function addToHistory(name){
     var history = JSON.parse(localStorage.getItem("whistory"));
     if (!history){
@@ -96,6 +100,7 @@ function addToHistory(name){
     localStorage.setItem("whistory", JSON.stringify(history));
 }
 
+/** Reads any cities that have been saved locally, and loads them into an html element as buttons */
 function loadPopular(){
     var history = JSON.parse(localStorage.getItem("whistory"));
     if (!history){
@@ -111,6 +116,9 @@ function loadPopular(){
     }
 }
 
+/** Handles the action of clicking on a city button that was
+ * generated from local storage.
+ */
 function savedButtonClickHandler(event){
     var button = $(event.target);
     var name = button.attr("data-place");
@@ -118,12 +126,13 @@ function savedButtonClickHandler(event){
     
 }
 
+/** Displays an error message to the user (used incase a city cannot be found)*/
 function showError(message){
     var card = $("<div>");
     card.addClass("card");
     
     var h3 = $("<h3>");
-    h3.text("location not found");
+    h3.text(message);
     card.append(h3);
 
     elements.currentSection.empty();
@@ -134,10 +143,12 @@ function showError(message){
 
 }
 
+/** Sets the active city to be tracked using either a zipcode or city-name*/
 function setCity(city){
+    
+    //set the url path based on whether a zipcode or name was entered
     var fetchUrl;
     var isZipCode = !isNaN(city)
-
     if (!isZipCode){
         fetchUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${key}`;
         
@@ -145,9 +156,16 @@ function setCity(city){
         fetchUrl = `https://api.openweathermap.org/geo/1.0/zip?zip=${city}&appid=${key}`;
     }
 
+    // start the asynchronous fetch of the weather data by finding latitude/longitude positions
     fetch(fetchUrl).then((response)=>{
+        if (!response.ok){
+            throw new Error("Not 2xx response", {cause: response});
+        }
         return response.json();
     }).then((data)=>{
+
+        // return data is an object if using a zipcode, or an array if using a name
+        // so we have to parse the info differently according to the return type
         if (isZipCode){
             fetchWeather(data.lat, data.lon)
             elements.location.text(" - " + data.name);
@@ -160,14 +178,15 @@ function setCity(city){
             loadPopular();
         }
         
-    }).catch((error)=>{
-        showError()
+    }).catch((error)=>{ // show the user an error if there was a problem in fetching the data
+        showError(`Location '${city}' was not found.`);
         console.log(error);
     }
     )
-    elements.searchInput.val("")
+    elements.searchInput.val("") // reset the search input to keep things clean
 }
 
+/** fetches weather data based on latiude/longitude positions and renders it to the screen*/ 
 function fetchWeather(lat,lon){
     console.log(lat + " " + lon);
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=imperial`).then((currentResponse)=>{
@@ -187,7 +206,7 @@ function fetchWeather(lat,lon){
     });
 }
 
-
+/** builds html elements based on weather data, and injects them into the document for display */
 function buildAndRenderData(current, forecast){
 
     var current = createWeatherCard(current);
@@ -215,12 +234,16 @@ function buildAndRenderData(current, forecast){
 }
 
 
+// load the history from local storage into buttons
 loadPopular();
 
+// imediately fetch and display the weather data for the most recent
+// city in the history (or Seattle as a default)
 var hist = JSON.parse(localStorage.getItem("whistory"));
 console.log(hist);
 setCity(hist ? hist[0] : "Seattle");
 
+// add a click handler for the search button
 elements.searchButton.on("click", function(event){
     event.preventDefault();
     if (!elements.searchInput.val()){
@@ -230,6 +253,7 @@ elements.searchButton.on("click", function(event){
     setCity(elements.searchInput.val());
 })
 
+// add a click handler for the "history" button that is only visible on smaller devices
 elements.historyButton.on("click", function(event){
     if (elements.popularList.children().length == 0){
         return;
@@ -242,6 +266,7 @@ elements.historyButton.on("click", function(event){
     }
 })
 
+// add a click handler for closing the history bubble on smaller devices
 document.addEventListener("click", function(){
 
     elements.popularList.removeClass("show");
