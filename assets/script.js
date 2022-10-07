@@ -59,11 +59,11 @@ function createWeatherCard(data){
     div.append(temph4);
 
     var windh4 = $("<h4>");
-    windh4.text("Wind: " + wind);
+    windh4.text("Wind: " + wind + " mph");
     div.append(windh4);
 
     var humh4 = $("<h4>");
-    humh4.text("Humidity: " + hum);
+    humh4.text("Humidity: " + Math.round(hum) + "%");
     div.append(humh4);
 
     return div;
