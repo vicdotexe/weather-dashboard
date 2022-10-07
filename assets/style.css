@@ -53,9 +53,13 @@ button {
     border-radius: 4px;
     padding:5px;
     margin:5px 0;
-    background: none;
+    background: rgba(6, 143, 255, 0.363);
     border: var(--primaryBorder);
     color: white;
+}
+
+button:hover{
+    background:rgba(6, 143, 255, 0.363)
 }
 
 #searchButton{
@@ -75,6 +79,13 @@ button {
     border: none;
     margin: 10px 0;
     border-bottom: var(--primaryBorder);
+}
+
+#menuSection h6{
+    color: white;
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 #popularList{
@@ -165,6 +176,11 @@ button {
 
 }
 
+#historyButton{
+    display:none;
+}
+
+
 @media screen and (max-width: 998px){
     main{
         flex-direction: column;
@@ -200,7 +216,10 @@ button {
     #searchButton{
         margin-left: 15px;
     }
-    
+    #historyButton{
+        display: block;
+        margin-right: 10px;
+    }
 }
 
 @media screen and (max-width: 768px){
@@ -217,4 +236,22 @@ button {
     #futureSection{
         margin-top: 20px;
     }
+}
+
+.show{
+    display:flex !important;
+    
+    border: 1px solid white;
+    position: absolute;
+    right: 0;
+    margin-right: 25px;
+    background: rgb(119, 171, 212);
+    border-radius: 15px;
+    padding: 10px;
+    z-index: 1;
+    border-top-right-radius: 0px;
+}
+
+.show button{
+    /* background-color: rgb(51, 98, 184); */
 }

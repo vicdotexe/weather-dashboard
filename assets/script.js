@@ -4,7 +4,8 @@ var elements = {
     searchButton: $("#searchButton"),
     searchInput: $("#searchInput"),
     location: $("#location"),
-    popularList: $("#popularList")
+    popularList: $("#popularList"),
+    historyButton: $("#historyButton")
 }
 
 var key = "91334187c2181ae5f6e0ad1855dff301";
@@ -20,17 +21,21 @@ function createWeatherCard(data){
 
     var date;
     if (data.dt_txt){
-        date = moment(data.dt_txt, "YYYY-MM-DD").format("M/D");
+        date = moment(data.dt_txt, "YYYY-MM-DD");
     }else{
-        date = moment().format("M/D");
+        date = moment();
     }
 
     var div = $("<div>");
     div.addClass("card");
 
     var dateh3 = $("<h3>");
-    dateh3.text(date);
+    dateh3.text(date.format("M/D"));
     div.append(dateh3);
+
+    var dayh5 = $("<h5>");
+    dayh5.text(date.format("ddd"));
+    div.append(dayh5);
 
     var img = $("<img>");
     img.attr("src", `https://openweathermap.org/img/wn/${icon}.png`)
@@ -62,7 +67,7 @@ function createWeatherCard(data){
 }
 
 function addToHistory(name){
-    var history = JSON.parse(localStorage.getItem("history"));
+    var history = JSON.parse(localStorage.getItem("whistory"));
     if (!history){
         history = [];
     }
@@ -88,11 +93,11 @@ function addToHistory(name){
         history.unshift(name);
     }
 
-    localStorage.setItem("history", JSON.stringify(history));
+    localStorage.setItem("whistory", JSON.stringify(history));
 }
 
 function loadPopular(){
-    var history = JSON.parse(localStorage.getItem("history"));
+    var history = JSON.parse(localStorage.getItem("whistory"));
     if (!history){
         return;
     }
@@ -108,7 +113,9 @@ function loadPopular(){
 
 function savedButtonClickHandler(event){
     var button = $(event.target);
-    setCity(button.attr("data-place"));
+    var name = button.attr("data-place");
+    setCity(name);
+    elements.searchInput.val(name)
 }
 
 function showError(message){
@@ -206,8 +213,36 @@ function buildAndRenderData(current, forecast){
     });
 }
 
+
 loadPopular();
+
+var hist = JSON.parse(localStorage.getItem("whistory"));
+console.log(hist);
+setCity(hist ? hist[0] : "Seattle");
+
 elements.searchButton.on("click", function(event){
     event.preventDefault();
+    if (!elements.searchInput.val()){
+        return;
+    }
+    
     setCity(elements.searchInput.val());
+})
+
+elements.historyButton.on("click", function(event){
+    if (elements.popularList.children().length == 0){
+        return;
+    }
+    event.stopPropagation();
+    if (!elements.popularList.hasClass("show")){
+        elements.popularList.addClass("show");
+    }else{
+        elements.popularList.removeClass("show");
+    }
+})
+
+document.addEventListener("click", function(){
+
+    elements.popularList.removeClass("show");
+
 })
