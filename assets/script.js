@@ -147,7 +147,11 @@ function showError(message){
 
 /** Sets the active city to be tracked using either a zipcode or city-name*/
 function setCity(city){
-    
+    elements.currentSection.empty();
+    elements.futureList.empty();
+    var loader = $("<div>");
+    loader.addClass("loader");
+    elements.currentSection.append(loader);
     //set the url path based on whether a zipcode or name was entered
     var fetchUrl;
     var isZipCode = !isNaN(city)
