@@ -3,7 +3,8 @@ var elements = {
     futureList: $("#futureList"),
     searchButton: $("#searchButton"),
     searchInput: $("#searchInput"),
-    location: $("#location")
+    location: $("#location"),
+    popularList: $("#popularList")
 }
 
 var key = "91334187c2181ae5f6e0ad1855dff301";
@@ -26,10 +27,6 @@ function createWeatherCard(data){
 
     var div = $("<div>");
     div.addClass("card");
-
-    // var type = date.format //todo: calculate whether its future or current
-    // div.addClass(type);
-    
 
     var dateh3 = $("<h3>");
     dateh3.text(date);
@@ -62,6 +59,56 @@ function createWeatherCard(data){
     div.append(humh4);
 
     return div;
+}
+
+function addToHistory(name){
+    var history = JSON.parse(localStorage.getItem("history"));
+    if (!history){
+        history = [];
+    }
+    var exists = false;
+    var index = 0;
+
+    for (let i = 0; i < history.length; i++){
+        if (history[i].toLowerCase() == name.toLowerCase()){
+            exists = true;
+            index = i;
+            break;
+        }
+    }
+
+    if (!exists){
+        history.unshift(name);
+        if (history.length > 8){
+            history.splice(history.length-1, 1);
+        }
+        
+    } else{
+        history.splice(index, 1);
+        history.unshift(name);
+    }
+
+    localStorage.setItem("history", JSON.stringify(history));
+}
+
+function loadPopular(){
+    var history = JSON.parse(localStorage.getItem("history"));
+    if (!history){
+        return;
+    }
+    elements.popularList.empty();
+    for (let item of history){
+        var btn = $("<button>");
+        btn.attr("data-place", item);
+        btn.on("click", savedButtonClickHandler);
+        btn.text(item);
+        elements.popularList.append(btn);
+    }
+}
+
+function savedButtonClickHandler(event){
+    var button = $(event.target);
+    setCity(button.attr("data-place"));
 }
 
 function showError(message){
@@ -97,9 +144,13 @@ function setCity(city){
         if (isZipCode){
             fetchWeather(data.lat, data.lon)
             elements.location.text(data.name);
+            addToHistory(data.name);
+            loadPopular();
         }else{
             fetchWeather(data[0].lat, data[0].lon)
             elements.location.text(data[0].name);
+            addToHistory(data[0].name);
+            loadPopular();
         }
         
     }).catch((error)=>{
@@ -155,7 +206,7 @@ function buildAndRenderData(current, forecast){
     });
 }
 
-console.log(searchInput);
+loadPopular();
 elements.searchButton.on("click", function(event){
     event.preventDefault();
     setCity(elements.searchInput.val());
