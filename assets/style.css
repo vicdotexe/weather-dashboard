@@ -8,24 +8,31 @@ body {
     background: var(--backgroundGradient);
     display: flex;
     flex-direction: column;
+    
 }
 
 header {
-    height: 5vh;
     border-bottom: var(--primaryBorder);
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(41, 92, 168, 0.623);
 }
 
 header h1{
     font-size: 24px;
     color:white;
+    margin: 10px;
 }
 main{
     height:100%;
     display: flex;
     justify-content: stretch;
     flex:1 1 ;
+}
+
+form{
+ display: flex;
+ flex-direction: column;
 }
 
 input {
@@ -36,6 +43,7 @@ input {
     background-color: rgba(255, 255, 255, 0.308);
     color: white;
 }
+
 input:focus{
     border: 1px solid white;
     outline:none;
@@ -75,7 +83,6 @@ button {
 }
 
 #currentSection{
-    border: 1px dashed gray;
     height: 45%;
     display: flex;
     justify-content: stretch;
@@ -85,7 +92,6 @@ button {
 #futureSection{
     height:45%;
     text-align: center;
-    border: 1px dashed gray;
     display: flex;
     flex-direction: column;
     flex: 1 1 1;
@@ -99,7 +105,7 @@ button {
 
 #contentSection {
     width:100%;
-    padding:5px;
+    padding:15px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -108,7 +114,6 @@ button {
 #futureList{
     display: flex;
     justify-content: space-between;
-    border: 1px dashed gray;
     flex: 1 1;
 }
 
@@ -150,7 +155,7 @@ button {
 .temp{
     position: absolute;
     right: 10%;
-    top: 20%;
+    top: 25%;
     font-size: 36px;
 }
 .currentCard{
@@ -186,6 +191,14 @@ button {
     }
     #futureSection{
         flex: 1 1;
+    }
+    form{
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+    }
+    #searchButton{
+        margin-left: 15px;
     }
     
 }

@@ -1,8 +1,9 @@
 var elements = {
     currentSection: $("#currentSection"),
     futureList: $("#futureList"),
-    searchButton: $("searchButton"),
-    searchInput: $("searchInput")
+    searchButton: $("#searchButton"),
+    searchInput: $("#searchInput"),
+    location: $("#location")
 }
 
 var key = "91334187c2181ae5f6e0ad1855dff301";
@@ -63,13 +64,49 @@ function createWeatherCard(data){
     return div;
 }
 
+function showError(message){
+    var card = $("<div>");
+    card.addClass("card");
+    
+    var h3 = $("<h3>");
+    h3.text("location not found");
+    card.append(h3);
+
+    elements.currentSection.empty();
+    elements.futureList.empty();
+    elements.currentSection.append(card);
+
+    elements.location.text("");
+
+}
 
 function setCity(city){
-    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${key}`).then((response)=>{
+    var fetchUrl;
+    var isZipCode = !isNaN(city)
+
+    if (!isZipCode){
+        fetchUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${key}`;
+        
+    }else{
+        fetchUrl = `https://api.openweathermap.org/geo/1.0/zip?zip=${city}&appid=${key}`;
+    }
+
+    fetch(fetchUrl).then((response)=>{
         return response.json();
     }).then((data)=>{
-        fetchWeather(data[0].lat, data[0].lon)
-    })
+        if (isZipCode){
+            fetchWeather(data.lat, data.lon)
+            elements.location.text(data.name);
+        }else{
+            fetchWeather(data[0].lat, data[0].lon)
+            elements.location.text(data[0].name);
+        }
+        
+    }).catch((error)=>{
+        showError()
+        console.log(error);
+    }
+    )
 }
 
 function fetchWeather(lat,lon){
@@ -118,6 +155,8 @@ function buildAndRenderData(current, forecast){
     });
 }
 
-searchButton.addEventListener("click", function(){
-    setCity("spokane");
+console.log(searchInput);
+elements.searchButton.on("click", function(event){
+    event.preventDefault();
+    setCity(elements.searchInput.val());
 })

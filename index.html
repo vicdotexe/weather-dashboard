@@ -12,12 +12,17 @@
 
     <header>
         <h1> Weather Dashboard</h1>
+        <h1 id="location"></h1>
     </header>
 
     <main>
         <aside id="menuSection">
-            <input id="searchInput">
-            <button id="searchButton">Search</button>
+            <form>
+                <input type="text" name="searchInput" id="searchInput" placeholder="Enter a city or zipcode">
+                <button id="searchButton">Search</button>
+            </form>
+            
+            
             <hr>
             <div id="popularList">
                 <button>temp city</button>
@@ -31,52 +36,10 @@
 
         <section id="contentSection">
             <section id="currentSection">
-                <div class="card currentCard">
-                    <h3>9/14/2022</h3>
-                    <img>
-                    <h4>Temp: 63.55 F</h4>
-                    <h4>Wind: 3.94 MPH</h4>
-                    <h4>Humidity: 63%</h4>
-                </div>
             </section>
             <section id="futureSection">
-                <h3>5-Day Forecast:</h3>
+                <h3>Forecast</h3>
                 <div id="futureList">
-                    <div class="card futureCard">
-                        <h3>9/14/2022</h3>
-                        <img>
-                        <h4>Temp: 63.55 F</h4>
-                        <h4>Wind: 3.94 MPH</h4>
-                        <h4>Humidity: 63%</h4>
-                    </div>
-                    <div class="card futureCard">
-                        <h3>9/14/2022</h3>
-                        <img>
-                        <h4>Temp: 63.55 F</h4>
-                        <h4>Wind: 3.94 MPH</h4>
-                        <h4>Humidity: 63%</h4>
-                    </div>
-                    <div class="card futureCard">
-                        <h3>9/14/2022</h3>
-                        <img>
-                        <h4>Temp: 63.55 F</h4>
-                        <h4>Wind: 3.94 MPH</h4>
-                        <h4>Humidity: 63%</h4>
-                    </div>
-                    <div class="card futureCard">
-                        <h3>9/14/2022</h3>
-                        <img>
-                        <h4>Temp: 63.55 F</h4>
-                        <h4>Wind: 3.94 MPH</h4>
-                        <h4>Humidity: 63%</h4>
-                    </div>
-                    <div class="card futureCard">
-                        <h3>9/14/2022</h3>
-                        <img>
-                        <h4>Temp: 63.55 F</h4>
-                        <h4>Wind: 3.94 MPH</h4>
-                        <h4>Humidity: 63%</h4>
-                    </div>
                 </div>
             </section>
         </section>
