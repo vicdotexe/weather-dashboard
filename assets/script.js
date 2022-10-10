@@ -227,11 +227,11 @@ function buildAndRenderData(current, forecast){
     console.log(forecast);
 
     forecast.list.forEach((weather) => {
-        console.log()
+    
         var localTime = moment(weather.dt, "X").local();
-        var now = moment();
+        var endOfToday = moment().endOf('day');
         
-        if (localTime.isAfter(now) && localTime.format("H") == 14){
+        if (localTime.isAfter(endOfToday) && localTime.format("H") == 14){
             var card = createWeatherCard(weather);
             elements.futureList.append(card);
         }
