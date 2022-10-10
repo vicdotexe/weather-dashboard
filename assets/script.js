@@ -5,6 +5,7 @@ var elements = {
     searchButton: $("#searchButton"),
     searchInput: $("#searchInput"),
     location: $("#location"),
+    locationToday: $("#locationToday"),
     popularList: $("#popularList"),
     historyButton: $("#historyButton")
 }
@@ -176,12 +177,14 @@ function setCity(city){
         // so we have to parse the info differently according to the return type
         if (isZipCode){
             fetchWeather(data.lat, data.lon)
-            elements.location.text(" - " + data.name);
+            elements.location.text(data.name);
+            elements.locationToday.text(data.name);
             addToHistory(data.name);
             loadPopular();
         }else{
             fetchWeather(data[0].lat, data[0].lon)
-            elements.location.text(" - " + data[0].name);
+            elements.location.text(data[0].name);
+            elements.locationToday.text(data[0].name);
             addToHistory(data[0].name);
             loadPopular();
         }

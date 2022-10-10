@@ -3,6 +3,8 @@
     --backgroundGradient: linear-gradient(10deg, rgb(87, 174, 202), rgb(87, 150, 202));
 
     --primaryBorder: 1px solid rgba(255, 255, 255, 0.452);
+    --locationGlow: rgb(0, 204, 255);
+    
 }
 *{
     font-family: "Baloo 2";
@@ -26,6 +28,7 @@ header h1{
     color:white;
     margin: 10px;
 }
+
 main{
     height:100%;
     display: flex;
