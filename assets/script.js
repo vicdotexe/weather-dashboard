@@ -224,14 +224,11 @@ function buildAndRenderData(current, forecast){
     console.log(forecast);
 
     forecast.list.forEach((weather) => {
+        console.log()
+        var localTime = moment(weather.dt, "X").local();
         var now = moment();
-        var timeStamp = moment(weather.dt_txt, "YYYY-MM-DD hh:mm:ss");
-        // var future = timeStamp.local().isAfter(now, "day");
-        // if (!future){
-        //     //return;
-        // }
         
-        if (timeStamp.format("H") == 0){
+        if (localTime.isAfter(now) && localTime.format("H") == 14){
             var card = createWeatherCard(weather);
             elements.futureList.append(card);
         }
