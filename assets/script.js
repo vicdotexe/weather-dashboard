@@ -230,8 +230,8 @@ function buildAndRenderData(current, forecast){
     
         var localTime = moment(weather.dt, "X").local();
         var endOfToday = moment().endOf('day');
-        
-        if (localTime.isAfter(endOfToday) && localTime.format("H") == 14){
+        if (localTime.isAfter(endOfToday) && localTime.format("H") >= 10 && localTime.format("H") < 13){
+
             var card = createWeatherCard(weather);
             elements.futureList.append(card);
         }
